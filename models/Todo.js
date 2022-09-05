@@ -5,6 +5,10 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sharedWith: {
+    type: Array,
+    required: true
+  },
   completed: {
     type: Boolean,
     required: true,

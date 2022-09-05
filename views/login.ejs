@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <title>Document</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
-<body>
+<body class="container center-align grey darken-2">
+    <section class="card-panel grey darken-4">
     <% if (locals.messages.errors) { %>
         <% messages.errors.forEach( el => { %>
             <div class="alert alert-danger"><%= el.msg %></div>
@@ -20,10 +22,13 @@
             <div class="alert alert-danger"><%= el.msg %></div>
         <% }) %>    
     <% } %>
-    <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit">
+    <form action="/login" method="POST">  
+        <input class="grey-text text-lighten-2"type="email" name="email" placeholder="Email">
+        <input class="grey-text text-lighten-2"type="password" name="password" placeholder="Password">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Login
+            <i class="material-icons right">login</i>
+          </button>
     </form>
+    </section>
 </body>
 </html>

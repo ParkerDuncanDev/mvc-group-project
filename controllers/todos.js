@@ -1,4 +1,5 @@
 const Todo = require('../models/Todo')
+const User = require('../models/User')
 
 module.exports = {
     getTodos: async (req,res)=>{
@@ -51,5 +52,28 @@ module.exports = {
         }catch(err){
             console.log(err)
         }
+    },
+    shareTodo: async (req,res)=>{
+        console.log(req.body.shareWith)
+        try{
+            await User.findOne({$or: [
+                {email: req.body.shareWith},
+                {userName: req.body.shareWith}
+              ]}, (err, existingUser) => {
+                if (err) { return next(err) }
+                if (!existingUser) {
+                    req.flash('errors', { msg: 'No user with that name or Email found.' })
+                }else{
+                    console.log(`existingUser returns ${existingUser}`, `shareWith returns ${req.body.shareWith}`,`idfromJS returns ${req.body.todoIdFromJSFile}`)
+                    
+                     Todo.findOneAndUpdate(
+                        {_id: req.body.todoIdFromJSFile},
+                        {$push: {sharedWith: existingUser._id}},
+                        {new: true})
+                    res.json('todo shared')
+                }}
+            )}catch(err){
+                console.log(err)
+            }
+        }
     }
-}    
