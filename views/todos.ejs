@@ -4,29 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <title>Document</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
 </head>
-<body>
-    <h1>Todos</h1>
-    <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
-                <span class='del'> Delete </span>
-            </li>
-    <% }) %>    
-    </ul>
+<body class="container center-align grey darken-2">
 
-    <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+    <section class="card-panel grey darken-4 grey-text text-lighten-2">
 
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
-        <input type="submit">
-    </form>
+        <a class="waves-effect waves-light btn right"href="/logout">Logout</a>
+        <h1><%= user.userName %> has <%= left %> things left to do.</h1>
+        <ul>
+        <% todos.forEach( el => { %>
+                <li class='todoItem' data-id='<%=el._id%>'>
+                    <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
+                    <a class="waves-effect waves-light share btn"> Share</a>
+                    <span class="hidden"><input type="text" name="share" id="" class="shareInput"> <a class="shareSend btn">Send Todo</a></span>
+                    <a class='waves-effect waves-light del btn'> Delete </a>
+                </li>
+        <% }) %>    
+        </ul>
+        </section>
 
-    <a href="/logout">Logout</a>
+        <section class="card-panel grey darken-4 grey-text text-lighten-2">
+            <h1><%= user.userName %> has <%= sharedLeft %> shared things left to do.</h1>
+            <ul>
+            <% sharedTodos.forEach( el => {%>
+                    <li class='todoItem' data-id='<%=el._id%>'>
+                        <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
+                        <a class="waves-effect waves-light share btn"> Share</a>
+                        <span class="hidden"><input type="text" name="share" id="" class="shareInput"> <a class="shareSend btn">Send Todo</a></span>
+                        <a class='waves-effect waves-light del btn'> Delete </a>
+                    </li>
+            <% }) %>    
+            </ul>
+            </section>
+<h1>Add a Todo</h1>
+        <form action="/todos/createTodo" method='POST'>
+            <input type="text" placeholder="Enter Todo Item" name='todoItem'>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+        </form>
 
-    <script src="js/main.js"></script>
+        
+
+        <script src="js/main.js"></script>
+    </section>
 </body>
 </html>

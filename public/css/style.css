@@ -1,10 +1,19 @@
 h1{
-    color: red;
+    color: rgb(255, 255, 255);
 }
 .completed{
     text-decoration: line-through;
     color: gray;
 }
 .not{
-    text-decoration: underline;
+    
+}
+
+.hidden{
+    display: none;
+}
+
+span{
+    color: aquamarine;
+    font-size: xx-large
 }
