@@ -17,3 +17,7 @@ span{
     color: aquamarine;
     font-size: xx-large
 }
+
+input {
+  color: rgb(255, 255, 255);
+}
