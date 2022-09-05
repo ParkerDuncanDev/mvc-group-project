@@ -1,3 +1,4 @@
+const { findById } = require('../models/Todo')
 const Todo = require('../models/Todo')
 const User = require('../models/User')
 
@@ -6,12 +7,20 @@ module.exports = {
         console.log(req.user)
         try{
             const todoItems = await Todo.find({userId:req.user.id})
+            const sharedTodoItems = await Todo.find({ sharedWith: `${req.user.id}` })
+            console.log(sharedTodoItems)
             const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user})
+            const sharedItemsLeft = await Todo.countDocuments({sharedWith:req.user.id,completed: false})
+            res.render('todos.ejs', {todos: todoItems,
+                                    sharedTodos: sharedTodoItems,
+                                    left: itemsLeft,
+                                    sharedLeft: sharedItemsLeft,
+                                    user: req.user})
         }catch(err){
             console.log(err)
         }
     },
+
     createTodo: async (req, res)=>{
         try{
             await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
@@ -55,25 +64,33 @@ module.exports = {
     },
     shareTodo: async (req,res)=>{
         console.log(req.body.shareWith)
+        let todoId = req.body.todoIdFromJSFile
+        const shareTarget = await User.findOne({$or: [
+            {email: req.body.shareWith},
+            {userName: req.body.shareWith}
+          ]}, (err, existingUser) => {
+            if (err) { return next(err) }
+            if (!existingUser) {
+                req.flash('errors', { msg: 'No user with that name or Email found.' })
+            }else{
+                console.log(`shareTarget returns ${existingUser._id}`, `todoId returns ${todoId}`)
+                return existingUser._id
+            }}
+            )
         try{
-            await User.findOne({$or: [
-                {email: req.body.shareWith},
-                {userName: req.body.shareWith}
-              ]}, (err, existingUser) => {
-                if (err) { return next(err) }
-                if (!existingUser) {
-                    req.flash('errors', { msg: 'No user with that name or Email found.' })
-                }else{
-                    console.log(`existingUser returns ${existingUser}`, `shareWith returns ${req.body.shareWith}`,`idfromJS returns ${req.body.todoIdFromJSFile}`)
-                    
-                     Todo.findOneAndUpdate(
-                        {_id: req.body.todoIdFromJSFile},
-                        {$push: {sharedWith: existingUser._id}},
-                        {new: true})
-                    res.json('todo shared')
-                }}
-            )}catch(err){
+            
+        }catch(err){
                 console.log(err)
             }
+        try {
+            console.log(`sharetarget`, shareTarget)
+            await Todo.findByIdAndUpdate(todoId,
+                { $push: { sharedWith: shareTarget._id } },
+                {new: true})
+                console.log( await Todo.findById(todoId))
+            res.json('todo shared')
+        } catch (error) {
+            
+        }
         }
     }
