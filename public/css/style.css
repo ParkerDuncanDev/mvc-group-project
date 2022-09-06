@@ -29,3 +29,12 @@ span.date{
     font-size:small
 
 }
+
+.header-logo {
+    font-size: 2em;
+    display: block;
+}
+
+table {
+    width: 100%;
+}
