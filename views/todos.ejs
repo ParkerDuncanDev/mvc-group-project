@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100Devs To-Do List</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <title>Document</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -25,11 +24,15 @@
                     <a class="waves-effect waves-light share btn"> Share</a>
                     <span class="hidden"><input type="text" name="share" id="" class="shareInput"> <a class="shareSend btn">Send Todo</a></span>
                     <a class='waves-effect waves-light del btn'> Delete </a>
+                    <br>
+                    <span class="date grey-text text-lighten-2">Added: <%= el.dateCreated %> </span>
+                    <br>
+                    <span class="date grey-text text-lighten-2">Completed: <%= el.dateCompleted %> </span>
                 </li>
         <% }) %>    
         </ul>
         </section>
-
+<!-- SHARED TODOS-->
         <section class="card-panel grey darken-4 grey-text text-lighten-2">
             <h1><%= user.userName %> has <%= sharedLeft %> shared things left to do.</h1>
             <ul>

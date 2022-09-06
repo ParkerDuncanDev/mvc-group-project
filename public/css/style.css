@@ -1,12 +1,14 @@
 h1{
     color: rgb(255, 255, 255);
 }
+
 .completed{
     text-decoration: line-through;
     color: gray;
 }
+
 .not{
-    
+    text-decoration: underline;
 }
 
 .hidden{
@@ -16,4 +18,14 @@ h1{
 span{
     color: aquamarine;
     font-size: xx-large
+}
+
+input {
+  color: rgb(255, 255, 255);
+}
+
+span.date{
+    color: aquamarine;
+    font-size:small
+
 }

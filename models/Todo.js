@@ -14,6 +14,13 @@ const TodoSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
+  },
+  dateCreated: {
+    type: String,
+    required:true
+  },
+  dateCompleted: {
+    type: String
   }
 })
 

@@ -23,7 +23,7 @@ module.exports = {
 
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id})
+            await Todo.create({todo: req.body.todoItem, completed: false, userId: req.user.id, dateCreated:new Date().toLocaleDateString('en-us', { month:"short", day:"numeric"}), dateCompleted: "Not Completed" })
             console.log('Todo has been added!')
             res.redirect('/todos')
         }catch(err){
@@ -33,7 +33,8 @@ module.exports = {
     markComplete: async (req, res)=>{
         try{
             await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-                completed: true
+                completed: true,
+                dateCompleted: new Date().toLocaleDateString('en-us', { month:"short", day:"numeric"})
             })
             console.log('Marked Complete')
             res.json('Marked Complete')
@@ -44,7 +45,8 @@ module.exports = {
     markIncomplete: async (req, res)=>{
         try{
             await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{
-                completed: false
+                completed: false,
+                dateCompleted:"Not Completed"
             })
             console.log('Marked Incomplete')
             res.json('Marked Incomplete')
