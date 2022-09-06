@@ -8,3 +8,9 @@ h1{
 .not{
     text-decoration: underline;
 }
+
+.login-container {
+    width: 500px;
+    margin-top: 50px;
+    text-align: center;
+  }
